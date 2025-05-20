@@ -37,3 +37,9 @@ output "vpc_name" {
   description = "El nombre asignado a la VPC."
   value       = var.vpc_name
 }
+
+# Output condicional: devuelve el ID si existe, o una cadena vacía si no
+output "internet_gateway_id" {
+  value       = var.create_igw ? aws_internet_gateway.igw[0].id : null
+  description = "El ID del Internet Gateway (IGW) creado, o null si no se creó."
+}

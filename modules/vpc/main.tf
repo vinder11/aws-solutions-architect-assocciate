@@ -46,6 +46,10 @@ resource "aws_default_network_acl" "default" {
   # Ejemplo: podrías añadir reglas de entrada/salida aquí.
   # subnet_ids = [aws_subnet.example.id] # Si quisieras asociarla explícitamente, aunque es la default.
 
+  lifecycle {
+    ignore_changes = [subnet_ids] # Evita que Terraform gestione cambios en subredes ya que por defecto no se gestionan.
+  }
+
   tags = merge(
     var.common_tags,
     {

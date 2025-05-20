@@ -23,7 +23,8 @@ module "private_route_table" {
   route_table_name = "${var.project_name}-private-rt-${var.environment_name}"
   subnet_ids       = module.subnets.private_subnet_ids
   is_public        = false
-  nat_gateway_id   = var.create_nat_gateway ? module.nat_gateway.nat_gateway_id : null
+  nat_gateway_id   = module.nat_gateway.nat_gateway_id
+  # nat_gateway_id   = var.create_nat_gateway ? module.nat_gateway.nat_gateway_id : null
 
   # Ejemplo de rutas personalizadas (opcional)
   # custom_routes = var.custom_routes

@@ -36,6 +36,12 @@ variable "instance_tenancy" {
   }
 }
 
+variable "create_igw" {
+  description = "Controla si se debe crear el Internet Gateway"
+  type        = bool
+  default     = false
+}
+
 variable "common_tags" {
   description = "Mapa de etiquetas comunes para aplicar a todos los recursos."
   type        = map(string)

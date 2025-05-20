@@ -3,8 +3,8 @@ module "nat_gateway" {
   source = "../../modules/nat_gateway"
 
   name_prefix        = "${var.project_name}-${var.environment_name}"
-  create_nat_gateway = true
-  public_subnet_id   = module.subnets.public_subnet_id[0]
+  create_nat_gateway = var.create_nat_gateway
+  public_subnet_id   = module.subnets.public_subnet_ids[0]
   # private_route_table_id = module.private_route_table.route_table_id
   internet_gateway_id = module.vpc.internet_gateway_id
 
