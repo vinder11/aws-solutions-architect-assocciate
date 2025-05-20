@@ -11,6 +11,7 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   instance_tenancy     = "default"
+  create_igw           = true
 
   common_tags = merge(
     {
