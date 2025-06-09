@@ -114,3 +114,12 @@ output "development_nat_eip_public_ip" {
   value       = module.nat_gateway.nat_eip_public_ip
 }
 ####################################################################################################
+output "ingress_rule_id" {
+  description = "ID de las reglas de entrada creada en el NACL."
+  value       = module.nacl_allow_ingress.rule_id
+}
+output "egress_rule_id" {
+  description = "ID de las reglas de salida creada en el NACL."
+  value       = module.nacl_allow_egress.rule_id
+}
+####################################################################################################
