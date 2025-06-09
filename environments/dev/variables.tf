@@ -43,13 +43,3 @@ variable "private_subnet_cidr" {
   description = "Bloque CIDR para la subred privada"
   type        = string
 }
-
-variable "create_nat_gateway" {
-  description = "Determina si se debe crear un NAT Gateway"
-  type        = bool
-}
-
-variable "create_internet_gateway" {
-  description = "Determina si se debe crear un Internet Gateway"
-  type        = bool
-}

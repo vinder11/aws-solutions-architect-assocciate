@@ -5,7 +5,7 @@ module "public_route_table" {
   vpc_id              = module.vpc.vpc_id
   route_table_name    = "${var.project_name}-public-rt-${var.environment_name}"
   subnet_ids          = module.subnets.public_subnet_ids
-  is_public           = var.create_nat_gateway
+  is_public           = true
   internet_gateway_id = module.vpc.internet_gateway_id
 
   tags = merge({
@@ -24,7 +24,6 @@ module "private_route_table" {
   subnet_ids       = module.subnets.private_subnet_ids
   is_public        = false
   nat_gateway_id   = module.nat_gateway.nat_gateway_id
-  # nat_gateway_id   = var.create_nat_gateway ? module.nat_gateway.nat_gateway_id : null
 
   # Ejemplo de rutas personalizadas (opcional)
   # custom_routes = var.custom_routes
