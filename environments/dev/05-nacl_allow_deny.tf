@@ -1,5 +1,5 @@
 module "nacl_allow_ingress" {
-  source = "../../modules/nacl-allow-deny"
+  source = "../../modules/nacl_allow_deny"
 
   acl_id      = module.vpc.default_network_acl_id
   rule_number = 100
@@ -12,7 +12,7 @@ module "nacl_allow_ingress" {
 }
 
 module "nacl_allow_egress" {
-  source = "../../modules/nacl-allow-deny"
+  source = "../../modules/nacl_allow_deny"
 
   acl_id      = module.vpc.default_network_acl_id
   rule_number = 100

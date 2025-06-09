@@ -114,12 +114,28 @@ output "development_nat_eip_public_ip" {
   value       = module.nat_gateway.nat_eip_public_ip
 }
 ####################################################################################################
-output "ingress_rule_id" {
+output "nacl_ingress_rule_id" {
   description = "ID de las reglas de entrada creada en el NACL."
   value       = module.nacl_allow_ingress.rule_id
 }
-output "egress_rule_id" {
+output "nacl_egress_rule_id" {
   description = "ID de las reglas de salida creada en el NACL."
   value       = module.nacl_allow_egress.rule_id
 }
 ####################################################################################################
+output "sg_security_group_id" {
+  description = "ID del grupo de seguridad creado"
+  value       = module.security_groups.security_group_id
+}
+output "sg_security_group_owner_id" {
+  description = "ID del propietario del grupo de seguridad"
+  value       = module.security_groups.security_group_owner_id
+}
+output "sg_egress_rules" {
+  description = "Lista de reglas de salida aplicadas"
+  value       = module.security_groups.egress_rules
+}
+output "sg_ingress_rules" {
+  description = "Lista de reglas de entrada aplicadas"
+  value       = module.security_groups.ingress_rules
+}
