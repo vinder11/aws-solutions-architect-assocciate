@@ -4,12 +4,6 @@ variable "name_prefix" {
   default     = "main"
 }
 
-variable "create_nat_gateway" {
-  description = "Determina si se debe crear un NAT Gateway"
-  type        = bool
-  default     = false
-}
-
 variable "public_subnet_id" {
   description = "ID de la subred pública donde se creará el NAT Gateway"
   type        = string
