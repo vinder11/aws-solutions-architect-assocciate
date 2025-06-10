@@ -6,27 +6,6 @@ variable "acl_id" {
     error_message = "El ID de la ACL no puede estar vacío."
   }
 }
-
-variable "rule_number" {
-  description = "Número de regla para el tráfico de entrada o salida"
-  type        = number
-  default     = 100
-  validation {
-    condition     = var.rule_number >= 1 && var.rule_number <= 32766
-    error_message = "El número de regla debe estar entre 1 y 32766."
-  }
-}
-
-variable "protocol" {
-  description = "Protocolo para la regla de entrada o salida (-1 para todos, tcp, udp, icmp)"
-  type        = string
-  default     = "-1"
-  validation {
-    condition     = contains(["-1", "tcp", "udp", "icmp", "6", "17", "1"], var.protocol)
-    error_message = "El protocolo debe ser -1, tcp, udp, icmp o sus números equivalentes (6, 17, 1)."
-  }
-}
-
 variable "type" {
   description = "Valor que determina si la regla de tráfico es de entrada o salida"
   type        = string
@@ -36,67 +15,82 @@ variable "type" {
     error_message = "El tipo debe ser 'ingress' o 'egress'."
   }
 }
+variable "allow_deny_rules" {
+  description = "Lista de reglas de ingreso o salida a crear"
+  type = list(object({
+    rule_number = number
+    protocol    = optional(string, "-1")
+    # type        = optional(string, "ingress") # o "egress" según sea necesario
+    rule_action = optional(string, "allow")
+    cidr_block  = optional(string, "0.0.0.0/0")
+    from_port   = optional(number, null)
+    to_port     = optional(number, null)
+    icmp_type   = optional(number, null)
+    icmp_code   = optional(number, null)
+  }))
+  default = []
 
-variable "rule_action" {
-  description = "Acción de la regla (allow o deny)"
-  type        = string
-  default     = "allow"
   validation {
-    condition     = contains(["allow", "deny"], var.rule_action)
-    error_message = "La acción de la regla debe ser 'allow' o 'deny'."
+    condition = alltrue([
+      for rule in var.allow_deny_rules : rule.rule_number >= 1 && rule.rule_number <= 32766
+    ])
+    error_message = "Todos los números de regla deben estar entre 1 y 32766."
   }
-}
 
-variable "cidr_block" {
-  description = "Bloque CIDR para la regla. Por defecto, permite todo el tráfico IPv4."
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "from_port" {
-  description = "Puerto de inicio para la regla de entrada (0-65535, null para todos los puertos)"
-  type        = number
-  default     = null
   validation {
-    condition     = var.from_port == null || (var.from_port >= 0 && var.from_port <= 65535)
-    error_message = "El puerto debe estar entre 0 y 65535."
+    condition = alltrue([
+      for rule in var.allow_deny_rules : contains(["allow", "deny"], rule.rule_action)
+    ])
+    error_message = "Todas las acciones de regla deben ser 'allow' o 'deny'."
   }
-}
 
-variable "to_port" {
-  description = "Puerto final para la regla de entrada (0-65535, null para todos los puertos)"
-  type        = number
-  default     = null
   validation {
-    condition     = var.to_port == null || (var.to_port >= 0 && var.to_port <= 65535)
-    error_message = "El puerto debe estar entre 0 y 65535."
+    condition = alltrue([
+      for rule in var.allow_deny_rules : contains(["-1", "tcp", "udp", "icmp", "6", "17", "1"], rule.protocol)
+    ])
+    error_message = "Todos los protocolos deben ser -1, tcp, udp, icmp o sus números equivalentes (6, 17, 1)."
   }
-}
 
-variable "icmp_type" {
-  description = "Tipo ICMP para regla de entrada (-1 para todos, solo aplicable si protocolo es icmp)"
-  type        = number
-  default     = null
+  # validation {
+  #   condition = alltrue([
+  #     for rule in var.allow_deny_rules : contains(["ingress", "egress"], rule.type)
+  #   ])
+  #   error_message = "El tipo debe ser 'ingress' o 'egress'."
+  # }
+
   validation {
-    condition = var.icmp_type == null ? true : (
-      can(tonumber(var.icmp_type)) &&
-      var.icmp_type >= -1 &&
-      var.icmp_type <= 255
-    )
-    error_message = "El tipo ICMP debe estar entre -1 y 255."
+    condition = alltrue([
+      for rule in var.allow_deny_rules : rule.from_port == null || (rule.from_port >= 0 && rule.from_port <= 65535)
+    ])
+    error_message = "Todos los puertos de inicio deben estar entre 0 y 65535."
   }
-}
 
-variable "icmp_code" {
-  description = "Código ICMP para regla de entrada (-1 para todos, solo aplicable si protocolo es icmp)"
-  type        = number
-  default     = null
   validation {
-    condition = var.icmp_code == null ? true : (
-      can(tonumber(var.icmp_code)) &&
-      var.icmp_code >= -1 &&
-      var.icmp_code <= 255
-    )
-    error_message = "El código ICMP debe estar entre -1 y 255."
+    condition = alltrue([
+      for rule in var.allow_deny_rules : rule.to_port == null || (rule.to_port >= 0 && rule.to_port <= 65535)
+    ])
+    error_message = "Todos los puertos finales deben estar entre 0 y 65535."
+  }
+
+  validation {
+    condition = alltrue([
+      for rule in var.allow_deny_rules : rule.icmp_type == null ? true : (
+        can(tonumber(rule.icmp_type)) &&
+        rule.icmp_type >= -1 &&
+        rule.icmp_type <= 255
+      )
+    ])
+    error_message = "Todos los tipos ICMP deben estar entre -1 y 255."
+  }
+
+  validation {
+    condition = alltrue([
+      for rule in var.allow_deny_rules : rule.icmp_code == null ? true : (
+        can(tonumber(rule.icmp_code)) &&
+        rule.icmp_code >= -1 &&
+        rule.icmp_code <= 255
+      )
+    ])
+    error_message = "Todos los códigos ICMP deben estar entre -1 y 255."
   }
 }

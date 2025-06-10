@@ -116,11 +116,11 @@ output "development_nat_eip_public_ip" {
 ####################################################################################################
 output "nacl_ingress_rule_id" {
   description = "ID de las reglas de entrada creada en el NACL."
-  value       = module.nacl_allow_ingress.rule_id
+  value       = module.nacl_allow_ingress.rule_ids
 }
 output "nacl_egress_rule_id" {
   description = "ID de las reglas de salida creada en el NACL."
-  value       = module.nacl_allow_egress.rule_id
+  value       = module.nacl_allow_egress.rule_ids
 }
 ####################################################################################################
 output "sg_security_group_id" {
