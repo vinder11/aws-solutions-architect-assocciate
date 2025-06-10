@@ -10,5 +10,5 @@ module "security_groups" {
   enable_https           = var.sg_enable_https
   enable_ssh             = var.sg_enable_ssh
   ssh_cidr_blocks        = var.sg_ssh_cidr_blocks
-  ingress_rules          = var.ingress_rules
+  ingress_rules          = var.sg_ingress_rules
 }

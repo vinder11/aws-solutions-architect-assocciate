@@ -103,7 +103,7 @@ variable "sg_ssh_cidr_blocks" {
   default     = []
 }
 
-variable "ingress_rules" {
+variable "sg_ingress_rules" {
   description = "Lista de reglas de entrada"
   type = list(object({
     description      = optional(string, "Ingress rule")
@@ -117,4 +117,14 @@ variable "ingress_rules" {
     prefix_list_ids  = optional(list(string), [])
   }))
   default = []
+}
+
+variable "ep_vpc_endpoint_type" {
+  description = "Tipo de endpoint VPC a crear (Gateway o Interface)"
+  type        = string
+}
+
+variable "ep_service_name" {
+  description = "Nombre del servicio para el endpoint VPC (ej. com.amazonaws.us-east-1.s3)"
+  type        = string
 }
