@@ -73,3 +73,48 @@ variable "nacl_allow_deny_egress_rules" {
   }))
   default = []
 }
+
+variable "sg_revoke_rules_on_delete" {
+  description = "Revocar todas las reglas del grupo de seguridad al eliminarlo"
+  type        = bool
+}
+
+variable "sg_enable_http" {
+  description = "Habilitar regla HTTP (puerto 80)"
+  type        = bool
+  default     = false
+}
+
+variable "sg_enable_https" {
+  description = "Habilitar regla HTTPS (puerto 443)"
+  type        = bool
+  default     = false
+}
+
+variable "sg_enable_ssh" {
+  description = "Habilitar regla SSH (puerto 22)"
+  type        = bool
+  default     = false
+}
+
+variable "sg_ssh_cidr_blocks" {
+  description = "CIDR blocks permitidos para SSH"
+  type        = list(string)
+  default     = []
+}
+
+variable "ingress_rules" {
+  description = "Lista de reglas de entrada"
+  type = list(object({
+    description      = optional(string, "Ingress rule")
+    from_port        = number
+    to_port          = number
+    protocol         = string
+    cidr_blocks      = optional(list(string), [])
+    ipv6_cidr_blocks = optional(list(string), [])
+    security_groups  = optional(list(string), [])
+    self             = optional(bool, false)
+    prefix_list_ids  = optional(list(string), [])
+  }))
+  default = []
+}
