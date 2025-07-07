@@ -139,3 +139,17 @@ output "sg_ingress_rules" {
   description = "Lista de reglas de entrada aplicadas"
   value       = module.security_groups.ingress_rules
 }
+####################################################################################################
+output "vpc_flow_log_id" {
+  description = "ID del Flow Log creado para la VPC de desarrollo."
+  value       = module.vpc_flow_logs_produccion.flow_log_id
+}
+output "vpc_flow_log_destination_arn" {
+  description = "ARN del destino de los logs (CloudWatch Log Group o S3 bucket) para el Flow Log de la VPC de desarrollo."
+  value       = module.vpc_flow_logs_produccion.log_destination_arn
+}
+output "vpc_flow_log_iam_role_arn" {
+  description = "ARN del rol IAM creado para los Flow Logs de la VPC de desarrollo."
+  value       = module.vpc_flow_logs_produccion.iam_role_arn
+}
+####################################################################################################
