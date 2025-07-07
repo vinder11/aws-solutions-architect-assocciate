@@ -140,16 +140,26 @@ output "sg_ingress_rules" {
   value       = module.security_groups.ingress_rules
 }
 ####################################################################################################
-output "vpc_flow_log_id" {
-  description = "ID del Flow Log creado para la VPC de desarrollo."
-  value       = module.vpc_flow_logs_produccion.flow_log_id
+# output "vpc_flow_log_id" {
+#   description = "ID del Flow Log creado para la VPC de desarrollo."
+#   value       = module.vpc_flow_logs_produccion.flow_log_id
+# }
+# output "vpc_flow_log_destination_arn" {
+#   description = "ARN del destino de los logs (CloudWatch Log Group o S3 bucket) para el Flow Log de la VPC de desarrollo."
+#   value       = module.vpc_flow_logs_produccion.log_destination_arn
+# }
+# output "vpc_flow_log_iam_role_arn" {
+#   description = "ARN del rol IAM creado para los Flow Logs de la VPC de desarrollo."
+#   value       = module.vpc_flow_logs_produccion.iam_role_arn
+# }
+####################################################################################################
+output "vpc_peering_connection_id" {
+  description = "El ID de la conexión VPC Peering entre el entorno de desarrollo y producción."
+  value       = module.peering_prod_dev.vpc_peering_connection_id
+
 }
-output "vpc_flow_log_destination_arn" {
-  description = "ARN del destino de los logs (CloudWatch Log Group o S3 bucket) para el Flow Log de la VPC de desarrollo."
-  value       = module.vpc_flow_logs_produccion.log_destination_arn
-}
-output "vpc_flow_log_iam_role_arn" {
-  description = "ARN del rol IAM creado para los Flow Logs de la VPC de desarrollo."
-  value       = module.vpc_flow_logs_produccion.iam_role_arn
+output "vpc_peering_connection_status" {
+  description = "El estado de la solicitud de la conexión de peering entre el entorno de desarrollo y producción."
+  value       = module.peering_prod_dev.vpc_peering_connection_status
 }
 ####################################################################################################
