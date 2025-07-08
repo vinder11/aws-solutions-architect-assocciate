@@ -45,6 +45,13 @@ resource "aws_vpc_peering_connection_accepter" "accepter" {
     Name = "vpc-peering-accepter-${aws_vpc_peering_connection.main.id}"
   })
 
+  lifecycle {
+    ignore_changes = [
+      # Ignoramos cambios en el ID de la conexión, ya que no se puede cambiar una vez creada.
+      tags
+    ]
+  }
+
   provider = aws.accepter
 }
 

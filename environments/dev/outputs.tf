@@ -163,3 +163,16 @@ output "vpc_peering_connection_status" {
   value       = module.peering_prod_dev.vpc_peering_connection_status
 }
 ####################################################################################################
+# output "eip_public_ip" {
+#   value       = module.nat_gateway_eip.public_ip
+#   description = "La dirección IP pública asignada al NAT Gateway en el entorno de desarrollo."
+# }
+# output "eip_allocation_id" {
+#   value       = module.nat_gateway_eip.allocation_id
+#   description = "El ID de asignación de la Elastic IP para el NAT Gateway en el entorno de desarrollo."
+# }
+# output "eip_association_id" {
+#   value       = module.nat_gateway_eip.association_id
+#   description = "El ID de asociación de la Elastic IP para el NAT Gateway en el entorno de desarrollo."
+# }
+####################################################################################################
