@@ -21,8 +21,8 @@
 #     # },
 #     # Adjuntar la VPC de Desarrollo
 #     "desarrollo" = {
-#       vpc_id     = "vpc-09180172491355392"
-#       subnet_ids = ["subnet-0f969102e835c45bb", "subnet-06796dadcc662ad0b"] # Bancosol-dev-vpc-WorkerNode-sn-a y Bancosol-dev-vpc-WorkerNode-sn-b, como están en diferentes AZs, puedo usar ambas
+#       vpc_id     = "vpc-"
+#       subnet_ids = ["subnet-", "subnet-"] # Bancosol-dev-vpc-WorkerNode-sn-a y Bancosol-dev-vpc-WorkerNode-sn-b, como están en diferentes AZs, puedo usar ambas
 #     }
 #   }
 
@@ -30,7 +30,7 @@
 # }
 
 # resource "aws_route" "vpc_a_to_vpc_b" {
-#   route_table_id         = "rtb-0c2b35397d65bc893" # Tabla de ruteo de la VPC Desarrollo
+#   route_table_id         = "rtb-" # Tabla de ruteo de la VPC Desarrollo
 #   destination_cidr_block = "198.168.2.0/23"        # CIDR de VPC AWS Lab
 #   transit_gateway_id     = module.single_account_tgw.transit_gateway_id
 # }
@@ -45,4 +45,32 @@
 #   route_table_id         = module.private_route_table.route_table_id # Tabla de ruteo de la VPC AWS Lab
 #   destination_cidr_block = "10.34.36.0/24"                           # CIDR de VPC Desarrollo
 #   transit_gateway_id     = module.single_account_tgw.transit_gateway_id
+# }
+
+# Módulo para crear un Transit Gateway compartido entre múltiples cuentas de AWS
+# Este módulo permite crear un Transit Gateway que puede ser compartido con otras cuentas de AWS
+# module "shared_tgw" {
+#   source = "./transit-gateway"
+
+#   name = "org-shared-tgw"
+#   description = "TGW compartido para toda la organización"
+
+#   # Deshabilitamos asociación y propagación por defecto para tener un control granular
+#   # con tablas de ruta personalizadas (práctica recomendada).
+#   default_route_table_association = false
+#   default_route_table_propagation = false
+
+#   # Compartimos el TGW con otras dos cuentas de AWS
+#   share_with_principal_arns = [
+#     "arn:aws:iam::111122223333:root", # Cuenta de Producción
+#     "arn:aws:iam::444455556666:root"  # Cuenta de Staging
+#   ]
+
+#   # En este caso, los attachments se harían desde las cuentas miembro,
+#   # por lo que dejamos el mapa de attachments vacío aquí.
+
+#   tags = {
+#     Owner     = "NetworkTeam"
+#     ManagedBy = "Terraform"
+#   }
 # }
