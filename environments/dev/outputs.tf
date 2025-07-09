@@ -176,3 +176,21 @@ output "vpc_peering_connection_status" {
 #   description = "El ID de asociación de la Elastic IP para el NAT Gateway en el entorno de desarrollo."
 # }
 ####################################################################################################
+output "transit_gateway_id" {
+  description = "El ID del Transit Gateway creado."
+  value       = module.single_account_tgw.transit_gateway_id
+}
+output "transit_gateway_arn" {
+  description = "El ARN (Amazon Resource Name) del Transit Gateway."
+  value       = module.single_account_tgw.transit_gateway_arn
+}
+output "transit_gateway_default_route_table_id" {
+  description = "El ID de la tabla de rutas por defecto asociada con el Transit Gateway."
+  value       = module.single_account_tgw.transit_gateway_default_route_table_id
+}
+output "vpc_attachment_ids" {
+  description = "Mapa con los IDs de los adjuntos de VPC creados."
+  value       = module.single_account_tgw.vpc_attachment_ids
+
+}
+####################################################################################################

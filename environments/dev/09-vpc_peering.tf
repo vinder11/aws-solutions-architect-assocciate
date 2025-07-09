@@ -6,9 +6,9 @@ module "peering_prod_dev" {
   accepter_vpc_id  = "vpc-09180172491355392" # VPC de Desarrollo
 
   # Actualizar las tablas de ruta principales de ambas VPCs
-  requester_route_table_ids = [module.private_route_table.route_table_id] # Tabla de ruta privada de la VPC de Laboratorio
-  accepter_route_table_ids  = ["rtb-0c2b35397d65bc893"]                   # Bancosol-dev-vpc-WorkerNode-rt de la subredes Bancosol-dev-vpc-WorkerNode-sn-a y Bancosol-dev-vpc-WorkerNode-sn-b
-  auto_accept_peering       = false                                       # Aceptar automáticamente la conexión de peering
+  requester_route_table_ids = [module.private_route_table.route_table_id, module.public_route_table.route_table_id] # Tabla de ruta privada de la VPC de Laboratorio
+  accepter_route_table_ids  = ["rtb-0c2b35397d65bc893"]                                                             # Bancosol-dev-vpc-WorkerNode-rt de la subredes Bancosol-dev-vpc-WorkerNode-sn-a y Bancosol-dev-vpc-WorkerNode-sn-b
+  auto_accept_peering       = false                                                                                 # Aceptar automáticamente la conexión de peering
 
   tags = var.vpc_custom_tags # Etiquetas personalizadas del entorno
 }
