@@ -55,10 +55,10 @@ variable "environment" {
   description = "Ambiente de deployment"
   type        = string
   default     = "dev"
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "El ambiente debe ser: dev, staging, o prod."
-  }
+  # validation {
+  #   condition     = contains(["dev", "staging", "prod"], var.environment)
+  #   error_message = "El ambiente debe ser: dev, staging, o prod."
+  # }
 }
 
 variable "project" {
@@ -463,12 +463,6 @@ variable "spot_valid_until" {
 variable "spot_launch_group" {
   description = "Launch group para spot instances"
   type        = string
-  default     = null
-}
-
-variable "spot_block_duration_minutes" {
-  description = "Duración del bloque spot en minutos"
-  type        = number
   default     = null
 }
 

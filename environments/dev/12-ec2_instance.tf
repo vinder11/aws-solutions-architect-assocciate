@@ -1,8 +1,8 @@
 # Configuración Básica (Entorno Dev)
-module "dev_web_server" {
+module "ec2_instances" {
   source = "../../modules/ec2_instance"
 
-  name          = "${var.project_name}-ec2-${var.environment_name}"
+  name          = "aws-labs-nacl" # el modulo mejora el nombre
   environment   = var.environment_name
   instance_type = "t2.micro"
 
@@ -27,6 +27,14 @@ module "dev_web_server" {
       to_port     = 22
       protocol    = "tcp"
       cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
+      # cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
+    },
+    http = {
+      type        = "ingress"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
     },
     egress_all = {
       type        = "egress"
@@ -47,11 +55,13 @@ module "dev_web_server" {
   # User Data para configurar drivers y entorno
   user_data = <<-EOF
               #!/bin/bash
-              yum update -y
-							yum install -y httpd
-							systemctl start httpd
-							systemctl enable httpd
-							echo "¡Hola desde EC2!" > /var/www/html/index.html
+              # Actualizar repositorios e instalar nginx
+              dnf update -y
+              dnf install -y nginx
+
+              # Iniciar y habilitar el servicio nginx
+              systemctl enable nginx
+              systemctl start nginx
               EOF
 
   # user_data_base64 = base64encode(<<-EOF

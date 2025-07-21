@@ -194,3 +194,32 @@ output "sg_ingress_rules" {
 
 # }
 ####################################################################################################
+output "instance_ids" {
+  description = "IDs de las instancias EC2 creadas en el entorno de desarrollo."
+  value       = module.ec2_instances.instance_ids
+}
+output "instance_arns" {
+  description = "ARNs de las instancias EC2 creadas en el entorno de desarrollo."
+  value       = module.ec2_instances.instance_arns
+}
+output "instance_public_ips" {
+  description = "IPs públicas de las instancias EC2 creadas en el entorno de desarrollo."
+  value       = module.ec2_instances.instance_public_ips
+}
+output "instance_private_ips" {
+  description = "IPs privadas de las instancias EC2 creadas en el entorno de desarrollo."
+  value       = module.ec2_instances.instance_private_ips
+}
+####################################################################################################
+output "alarm_full_name" {
+  description = "Nombre completo construido para la alarma de CloudWatch."
+  value       = module.ec2_cpu_alarm.full_alarm_name
+}
+output "alarm_arn" {
+  description = "ARN de la alarma creada"
+  value       = module.ec2_cpu_alarm.alarm_arn
+}
+output "alarm_id" {
+  description = "ID de la alarma creada"
+  value       = module.ec2_cpu_alarm.alarm_id
+}

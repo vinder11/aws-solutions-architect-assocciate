@@ -173,7 +173,6 @@ resource "aws_spot_instance_request" "this" {
   valid_from                     = var.spot_valid_from                     # Fecha de inicio validez
   valid_until                    = var.spot_valid_until                    # Fecha de fin validez
   launch_group                   = var.spot_launch_group                   # Grupo de lanzamiento
-  block_duration_minutes         = var.spot_block_duration_minutes         # Duración bloque spot
   instance_interruption_behavior = var.spot_instance_interruption_behavior # Comportamiento al interrumpir
   wait_for_fulfillment           = true                                    # Esperar a que se cumpla la request
 
