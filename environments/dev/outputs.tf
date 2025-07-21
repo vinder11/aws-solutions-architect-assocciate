@@ -153,15 +153,15 @@ output "sg_ingress_rules" {
 #   value       = module.vpc_flow_logs_produccion.iam_role_arn
 # }
 ####################################################################################################
-output "vpc_peering_connection_id" {
-  description = "El ID de la conexión VPC Peering entre el entorno de desarrollo y producción."
-  value       = module.peering_prod_dev.vpc_peering_connection_id
+# output "vpc_peering_connection_id" {
+#   description = "El ID de la conexión VPC Peering entre el entorno de desarrollo y producción."
+#   value       = module.peering_prod_dev.vpc_peering_connection_id
 
-}
-output "vpc_peering_connection_status" {
-  description = "El estado de la solicitud de la conexión de peering entre el entorno de desarrollo y producción."
-  value       = module.peering_prod_dev.vpc_peering_connection_status
-}
+# }
+# output "vpc_peering_connection_status" {
+#   description = "El estado de la solicitud de la conexión de peering entre el entorno de desarrollo y producción."
+#   value       = module.peering_prod_dev.vpc_peering_connection_status
+# }
 ####################################################################################################
 # output "eip_public_ip" {
 #   value       = module.nat_gateway_eip.public_ip
