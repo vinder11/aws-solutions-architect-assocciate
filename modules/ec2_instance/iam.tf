@@ -1,7 +1,10 @@
 # Resource - IAM Role
 resource "aws_iam_role" "this" {
-  count = local.is_module_enabled && var.create_iam_instance_profile ? 1 : 0
-  # ^ Crea el rol solo si el módulo está habilitado Y se solicita crear un perfil IAM
+  count = local.is_module_enabled && var.create_iam_instance_profile && (try(var.iam_role_existing_name, "") == "") ? 1 : 0
+  # ^ Crear rol solo si:
+  # 1. Módulo habilitado
+  # 2. Se solicita crear perfil IAM
+  # 3. NO se proporcionó nombre de rol existente (cadena vacía o null)
   # count permite creación condicional (0 o 1 veces)
 
   name = "${local.name_prefix}-ec2-role"
@@ -74,7 +77,8 @@ resource "aws_iam_instance_profile" "this" {
   name = "${local.name_prefix}-ec2-profile"
   # ^ Nombre del instance profile
 
-  role = aws_iam_role.this[0].name
+  role = try(var.iam_role_existing_name, "") != "" ? var.iam_role_existing_name : aws_iam_role.this[0].name
+  # ^ Usa el rol existente si se especificó, o el recién creado
   # ^ Rol IAM que se asociará a las instancias EC2
 
   tags = merge(local.default_tags, {

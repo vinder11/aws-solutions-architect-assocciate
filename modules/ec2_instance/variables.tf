@@ -245,6 +245,16 @@ variable "create_iam_instance_profile" {
   default     = false
 }
 
+variable "iam_role_existing_name" {
+  description = "Nombre de un rol IAM existente a usar. Dejar vacío para crear uno nuevo"
+  type        = string
+  default     = ""
+  validation {
+    condition     = can(regex("^[\\w+=,.@-]{1,64}$", var.iam_role_existing_name)) || var.iam_role_existing_name == ""
+    error_message = "El nombre del rol IAM debe cumplir con los requisitos de AWS o estar vacío"
+  }
+}
+
 variable "iam_role_policies" {
   description = "Políticas IAM para adjuntar al role"
   type        = list(string)
