@@ -237,3 +237,33 @@ output "key_pair_arn" {
   value       = module.key_pair_dev.arn
 
 }
+####################################################################################################
+output "iam_role_arn" {
+  description = "ARN del rol IAM creado"
+  value       = module.ec2_role.role_arn
+}
+output "iam_role_name" {
+  description = "Nombre del rol IAM creado"
+  value       = module.ec2_role.role_name
+}
+output "iam_role_id" {
+  description = "ID único del rol IAM"
+  value       = module.ec2_role.role_id
+}
+output "iam_role_create_date" {
+  description = "Fecha de creación del rol"
+  value       = module.ec2_role.role_create_date
+}
+output "iam_assume_role_policy" {
+  description = "Política de asunción del rol"
+  value       = module.ec2_role.assume_role_policy
+  sensitive   = true
+}
+output "iam_attached_managed_policies" {
+  description = "Lista de políticas administradas adjuntadas"
+  value       = module.ec2_role.attached_managed_policies
+}
+output "iam_inline_policies" {
+  description = "Mapa de políticas inline creadas"
+  value       = module.ec2_role.inline_policies
+}

@@ -2,9 +2,11 @@
 module "ec2_instances" {
   source = "../../modules/ec2_instance"
 
-  name          = "aws-labs-nacl" # el modulo mejora el nombre
-  environment   = var.environment_name
-  instance_type = "t2.micro"
+  name                        = "aws-labs-nacl" # el modulo mejora el nombre
+  environment                 = var.environment_name
+  instance_type               = "t2.micro"
+  iam_role_existing_name      = module.ec2_role.role_name # Perfil IAM para la instancia
+  create_iam_instance_profile = true                      # Crear perfil IAM para la instancia
 
   # ami_filter = {
   #   name         = "al2023-ami-kernel-6.1-*"
