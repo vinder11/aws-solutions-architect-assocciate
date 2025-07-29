@@ -11,9 +11,9 @@ module "ec2_instances" {
   #   owners       = ["amazon"]
   #   architecture = "x86_64"
   # }
-  ami_id                      = "ami-0150ccaf51ab55a51" # AMI de Amazon Linux 2 en us-east-1
-  key_name                    = "temporal"
-  associate_public_ip_address = true # Asociar IP pública para acceso directo
+  ami_id                      = "ami-0150ccaf51ab55a51"      # AMI de Amazon Linux 2 en us-east-1
+  key_name                    = module.key_pair_dev.key_name # Nombre del Key Pair creado
+  associate_public_ip_address = true                         # Asociar IP pública para acceso directo
 
   # Configuración de red
   vpc_id    = module.vpc.vpc_id

@@ -223,3 +223,17 @@ output "alarm_id" {
   description = "ID de la alarma creada"
   value       = module.ec2_cpu_alarm.alarm_id
 }
+####################################################################################################
+output "key_pair_name" {
+  description = "El nombre del Key Pair creado."
+  value       = module.key_pair_dev.key_name
+}
+output "key_pair_id" {
+  description = "El ID del Key Pair."
+  value       = module.key_pair_dev.key_pair_id
+}
+output "key_pair_arn" {
+  description = "El ARN del Key Pair."
+  value       = module.key_pair_dev.arn
+
+}
