@@ -28,7 +28,7 @@ module "ec2_instances" {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
+      cidr_blocks = ["181.188.150.66/32", "161.138.104.217/32"] # Solo acceso desde la VPC
       # cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
     },
     http = {
@@ -36,7 +36,7 @@ module "ec2_instances" {
       from_port   = 80
       to_port     = 80
       protocol    = "tcp"
-      cidr_blocks = ["181.188.150.66/32"] # Solo acceso desde la VPC
+      cidr_blocks = ["181.188.150.66/32", "161.138.104.217/32"] # Solo acceso desde la VPC
     },
     egress_all = {
       type        = "egress"
