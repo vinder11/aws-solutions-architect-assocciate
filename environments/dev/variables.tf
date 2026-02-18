@@ -39,6 +39,11 @@ variable "public_subnet_cidr" {
   type        = string
 }
 
+variable "public_subnet_cidr_b" {
+  description = "Bloque CIDR para la subred pública"
+  type        = string
+}
+
 variable "private_subnet_cidr" {
   description = "Bloque CIDR para la subred privada"
   type        = string

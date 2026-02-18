@@ -267,3 +267,44 @@ output "iam_inline_policies" {
   description = "Mapa de políticas inline creadas"
   value       = module.ec2_role.inline_policies
 }
+####################################################################################################
+output "launch_template_id" {
+  description = "This is the launch template ID"
+  value       = module.basic_launch_template.id
+}
+output "launch_template_name" {
+  description = "This is the launch template name"
+  value       = module.basic_launch_template.name
+}
+output "launch_template_latest_version" {
+  description = "This is the launch template latest version"
+  value       = module.basic_launch_template.latest_version
+}
+output "launch_template_default_version" {
+  description = "This is the launch template default version"
+  value       = module.basic_launch_template.default_version
+}
+output "launch_template_arn" {
+  description = "This is the launch template ARN"
+  value       = module.basic_launch_template.arn
+}
+####################################################################################################
+output "autoscaling_group_id" {
+  description = "ID del Auto Scaling Group"
+  value       = module.autoscaling_with_alb.autoscaling_group_id
+}
+
+output "autoscaling_group_name" {
+  description = "Nombre del Auto Scaling Group"
+  value       = module.autoscaling_with_alb.autoscaling_group_name
+}
+
+output "autoscaling_group_arn" {
+  description = "ARN del Auto Scaling Group"
+  value       = module.autoscaling_with_alb.autoscaling_group_arn
+}
+
+output "scheduled_action_names" {
+  description = "Nombres de las acciones programadas del ASG"
+  value       = module.autoscaling_with_alb.scheduled_action_names
+}
