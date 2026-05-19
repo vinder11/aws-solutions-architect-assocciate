@@ -308,3 +308,46 @@ output "scheduled_action_names" {
   description = "Nombres de las acciones programadas del ASG"
   value       = module.autoscaling_with_alb.scheduled_action_names
 }
+####################################################################################################
+output "lb_arn" {
+  description = "ARN del load balancer."
+  value       = module.alb.lb_arn
+}
+output "lb_dns_name" {
+  description = "Nombre DNS del load balancer."
+  value       = module.alb.lb_dns_name
+}
+output "lb_zone_id" {
+  description = "ID de zona del load balancer (para registros alias de Route 53)."
+  value       = module.alb.lb_zone_id
+}
+
+output "lb_name" {
+  description = "Nombre del load balancer."
+  value       = module.alb.lb_name
+}
+
+output "lb_type" {
+  description = "Tipo del load balancer."
+  value       = module.alb.lb_type
+}
+
+output "lb_target_group_arns" {
+  description = "Mapa de clave de grupo objetivo → ARN."
+  value       = module.alb.target_group_arns
+}
+
+output "lb_target_group_ids" {
+  description = "Mapa de clave de grupo objetivo → ID."
+  value       = module.alb.target_group_ids
+}
+
+output "lb_listener_arns" {
+  description = "Mapa de clave de listener → ARN."
+  value       = module.alb.listener_arns
+}
+
+output "lb_listener_ids" {
+  description = "Mapa de clave de listener → ID."
+  value       = module.alb.listener_ids
+}
