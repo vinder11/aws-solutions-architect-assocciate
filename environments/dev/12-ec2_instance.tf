@@ -38,6 +38,13 @@ module "ec2_instances" {
       protocol    = "tcp"
       cidr_blocks = ["181.188.150.66/32", "161.138.104.217/32"] # Solo acceso desde la VPC
     },
+    http2 = {
+      type                     = "ingress"
+      from_port                = 80
+      to_port                  = 80
+      protocol                 = "tcp"
+      source_security_group_id = module.security_groups.security_group_id
+    },
     egress_all = {
       type        = "egress"
       from_port   = 0
