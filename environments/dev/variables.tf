@@ -124,6 +124,18 @@ variable "sg_ingress_rules" {
   default = []
 }
 
+variable "http_cidr_blocks" {
+  description = "CIDR blocks permitidos para HTTP"
+  type        = list(string)
+  default     = []
+}
+
+variable "https_cidr_blocks" {
+  description = "CIDR blocks permitidos para HTTPS"
+  type        = list(string)
+  default     = []
+}
+
 variable "ep_vpc_endpoint_type" {
   description = "Tipo de endpoint VPC a crear (Gateway o Interface)"
   type        = string
