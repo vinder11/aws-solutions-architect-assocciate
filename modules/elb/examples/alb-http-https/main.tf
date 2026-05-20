@@ -69,12 +69,12 @@ module "alb" {
   target_groups = {
     # Main app — instance targets
     app_main = {
-      protocol             = "HTTP"
-      port                 = 8080
-      protocol_version     = "HTTP1"
-      target_type          = "instance"
-      deregistration_delay = 60
-      slow_start           = 60
+      protocol                      = "HTTP"
+      port                          = 8080
+      protocol_version              = "HTTP1"
+      target_type                   = "instance"
+      deregistration_delay          = 60
+      slow_start                    = 60
       load_balancing_algorithm_type = "round_robin"
 
       health_check = {
@@ -138,10 +138,10 @@ module "alb" {
     }
 
     https = {
-      port            = 443
-      protocol        = "HTTPS"
-      ssl_policy      = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-      certificate_arn = var.certificate_arn
+      port                        = 443
+      protocol                    = "HTTPS"
+      ssl_policy                  = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+      certificate_arn             = var.certificate_arn
       additional_certificate_arns = var.additional_certificate_arns
 
       default_action = {
@@ -151,7 +151,7 @@ module "alb" {
 
       mutual_authentication = {
         mode            = "passthrough"
-        trust_store_arn = null  # passthrough doesn't require a trust store
+        trust_store_arn = null # passthrough doesn't require a trust store
       }
     }
   }
@@ -199,7 +199,7 @@ module "alb" {
         {
           type = "forward"
           weighted_targets = [
-            { target_group_key = "app_main",  weight = 90 },
+            { target_group_key = "app_main", weight = 90 },
             { target_group_key = "app_canary", weight = 10 }
           ]
           stickiness_duration = 300
@@ -230,27 +230,36 @@ module "alb" {
   waf_web_acl_arn = var.waf_web_acl_arn
 
   tags = {
-    Project     = "bsol-web"
-    Owner       = "platform-engineering"
-    CostCenter  = "infra"
+    Project    = "bsol-web"
+    Owner      = "platform-engineering"
+    CostCenter = "infra"
   }
 }
 
 # ── Variables ─────────────────────────────────────────────────
 
-variable "aws_region"                  { type = string; default = "us-east-1" }
-variable "vpc_id"                      { type = string }
-variable "public_subnet_ids"           { type = list(string) }
-variable "alb_sg_id"                   { type = string }
-variable "log_bucket"                  { type = string }
-variable "certificate_arn"             { type = string }
-variable "additional_certificate_arns" { type = list(string); default = [] }
-variable "waf_web_acl_arn"             { type = string; default = null }
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
+variable "vpc_id" { type = string }
+variable "public_subnet_ids" { type = list(string) }
+variable "alb_sg_id" { type = string }
+variable "log_bucket" { type = string }
+variable "certificate_arn" { type = string }
+variable "additional_certificate_arns" {
+  type    = list(string)
+  default = []
+}
+variable "waf_web_acl_arn" {
+  type    = string
+  default = null
+}
 
 # ── Outputs ───────────────────────────────────────────────────
 
-output "alb_dns_name"      { value = module.alb.lb_dns_name }
-output "alb_zone_id"       { value = module.alb.lb_zone_id }
-output "listener_arns"     { value = module.alb.listener_arns }
+output "alb_dns_name" { value = module.alb.lb_dns_name }
+output "alb_zone_id" { value = module.alb.lb_zone_id }
+output "listener_arns" { value = module.alb.listener_arns }
 output "target_group_arns" { value = module.alb.target_group_arns }
-output "route53_alias"     { value = module.alb.route53_alias_target }
+output "route53_alias" { value = module.alb.route53_alias_target }

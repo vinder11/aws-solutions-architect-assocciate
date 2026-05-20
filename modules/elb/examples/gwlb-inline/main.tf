@@ -22,7 +22,7 @@ module "gwlb" {
 
   name        = "bsol-fw-gwlb"
   lb_type     = "gateway"
-  internal    = true   # GWLB is always internal
+  internal    = true # GWLB is always internal
   environment = "prod"
 
   vpc_id     = var.vpc_id
@@ -41,7 +41,7 @@ module "gwlb" {
     fw_appliances = {
       protocol             = "GENEVE"
       port                 = 6081
-      target_type          = "ip"  # point at appliance ENI IPs
+      target_type          = "ip" # point at appliance ENI IPs
       deregistration_delay = 300
 
       # GWLB health check: typically TCP or HTTPS to appliance mgmt port
@@ -100,17 +100,20 @@ resource "aws_vpc_endpoint_service" "gwlb" {
 
 # ── Variables ─────────────────────────────────────────────────
 
-variable "aws_region"             { type = string; default = "us-east-1" }
-variable "vpc_id"                 { type = string }
-variable "appliance_subnet_ids"   { type = list(string) }
-variable "appliance_ip_az1"       { type = string }
-variable "appliance_ip_az2"       { type = string }
-variable "log_bucket"             { type = string }
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
+variable "vpc_id" { type = string }
+variable "appliance_subnet_ids" { type = list(string) }
+variable "appliance_ip_az1" { type = string }
+variable "appliance_ip_az2" { type = string }
+variable "log_bucket" { type = string }
 
 # ── Outputs ───────────────────────────────────────────────────
 
-output "gwlb_arn"                    { value = module.gwlb.lb_arn }
-output "gwlb_dns_name"               { value = module.gwlb.lb_dns_name }
-output "target_group_arns"           { value = module.gwlb.target_group_arns }
-output "endpoint_service_name"       { value = aws_vpc_endpoint_service.gwlb.service_name }
-output "endpoint_service_id"         { value = aws_vpc_endpoint_service.gwlb.id }
+output "gwlb_arn" { value = module.gwlb.lb_arn }
+output "gwlb_dns_name" { value = module.gwlb.lb_dns_name }
+output "target_group_arns" { value = module.gwlb.target_group_arns }
+output "endpoint_service_name" { value = aws_vpc_endpoint_service.gwlb.service_name }
+output "endpoint_service_id" { value = aws_vpc_endpoint_service.gwlb.id }
