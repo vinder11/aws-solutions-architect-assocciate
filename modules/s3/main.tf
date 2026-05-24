@@ -347,10 +347,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
 
       # ── Filter ───────────────────────────────────────────────
       dynamic "filter" {
-        for_each = rule.value.filter != null ? [rule.value.filter] : []
+        for_each = rule.value.filter != null ? [rule.value.filter] : [null]
         content {
           dynamic "and" {
             for_each = (
+              filter.value != null &&
               filter.value.prefix != null &&
               (length(filter.value.tags) > 0 ||
                 filter.value.object_size_greater_than != null ||
@@ -365,15 +366,16 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
           }
           # Simple prefix-only filter
           prefix = (
+            filter.value != null &&
             filter.value.prefix != null &&
             length(filter.value.tags) == 0 &&
             filter.value.object_size_greater_than == null &&
             filter.value.object_size_less_than == null
           ) ? filter.value.prefix : null
-
           # Tags-only filter
           dynamic "tag" {
             for_each = (
+              filter.value != null &&
               filter.value.prefix == null &&
               length(filter.value.tags) == 1 &&
               filter.value.object_size_greater_than == null &&
